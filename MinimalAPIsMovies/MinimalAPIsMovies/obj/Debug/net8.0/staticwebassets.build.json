@@ -1,0 +1,39 @@
+{
+  "Version": 1,
+  "Hash": "mKfr3poMmoD4ID8/hqgYMa7oCsA0XO+2lNlPJdjJtUU=",
+  "Source": "MinimalAPIsMovies",
+  "BasePath": "_content/MinimalAPIsMovies",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "MinimalAPIsMovies\\wwwroot",
+      "Source": "MinimalAPIsMovies",
+      "ContentRoot": "D:\\Projects\\MinAPI-ASPNET8\\MinimalAPIsMovies\\MinimalAPIsMovies\\wwwroot\\",
+      "BasePath": "_content/MinimalAPIsMovies",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\Projects\\MinAPI-ASPNET8\\MinimalAPIsMovies\\MinimalAPIsMovies\\wwwroot\\actors\\5ab87b44-dcb7-4fa4-ad8f-ab6a776b3db2.jpg",
+      "SourceId": "MinimalAPIsMovies",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\MinAPI-ASPNET8\\MinimalAPIsMovies\\MinimalAPIsMovies\\wwwroot\\",
+      "BasePath": "_content/MinimalAPIsMovies",
+      "RelativePath": "actors/5ab87b44-dcb7-4fa4-ad8f-ab6a776b3db2.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\actors\\5ab87b44-dcb7-4fa4-ad8f-ab6a776b3db2.jpg"
+    }
+  ]
+}
