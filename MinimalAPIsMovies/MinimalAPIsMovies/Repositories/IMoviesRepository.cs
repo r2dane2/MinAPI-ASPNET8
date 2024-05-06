@@ -11,4 +11,6 @@ public interface IMoviesRepository
     Task Update(Movie movie);
     Task Delete(int id);
     Task<bool> Exists(int id);
+    Task Assign(int id, IEnumerable<int> genresId);
+    Task Assign(int id, List<ActorMovie> actors);
 }

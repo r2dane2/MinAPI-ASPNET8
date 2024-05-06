@@ -5,7 +5,7 @@ using MinimalAPIsMovies.Entities;
 
 namespace MinimalAPIsMovies.Repositories;
 
-public class ActorRepository(AppDbContext context, IHttpContextAccessor httpContextAccessor) : IActorRepository
+public class ActorsRepository(AppDbContext context, IHttpContextAccessor httpContextAccessor) : IActorsRepository
 {
     /// <inheritdoc />
     public async Task<List<Actor>> GetAll(PaginationDto pagination)
@@ -58,5 +58,10 @@ public class ActorRepository(AppDbContext context, IHttpContextAccessor httpCont
     {
         await context.Actors.Where(w => w.Id == id)
                      .ExecuteDeleteAsync();
+    }
+    
+    public async Task<List<int>> Exists(IEnumerable<int> ids)
+    {
+        return await context.Actors.Where(w => ids.Contains(w.Id)).Select(s => s.Id).ToListAsync();
     }
 }

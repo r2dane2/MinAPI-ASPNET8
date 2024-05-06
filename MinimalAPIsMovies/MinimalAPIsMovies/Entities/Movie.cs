@@ -13,4 +13,8 @@ public class Movie
     public string? Poster { get; set; }
 
     public List<Comment> Comments { get; set; } = [];
+
+    public List<GenreMovie> Genres { get; set; } = [];
+
+    public List<ActorMovie> Actors { get; set; } = [];
 }

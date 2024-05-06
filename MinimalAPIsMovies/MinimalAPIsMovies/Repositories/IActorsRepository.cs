@@ -3,7 +3,7 @@ using MinimalAPIsMovies.Entities;
 
 namespace MinimalAPIsMovies.Repositories;
 
-public interface IActorRepository
+public interface IActorsRepository
 {
     Task<List<Actor>> GetAll(PaginationDto pagination);
 
@@ -18,4 +18,5 @@ public interface IActorRepository
     Task Delete(int id);
 
     Task<List<Actor>> GetByName(string name);
+    Task<List<int>> Exists(IEnumerable<int> ids);
 }

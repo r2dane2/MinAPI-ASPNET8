@@ -35,7 +35,7 @@ public static class ActorsEndpoints
         return group;
     }
 
-    private static async Task<Created<ActorDto>> Create([FromForm] CreateActorDto createActorDto, IActorRepository repository, IOutputCacheStore outputCacheStore, IMapper mapper, IFileStorage fileStorage)
+    private static async Task<Created<ActorDto>> Create([FromForm] CreateActorDto createActorDto, IActorsRepository repository, IOutputCacheStore outputCacheStore, IMapper mapper, IFileStorage fileStorage)
     {
         var actor = mapper.Map<Actor>(createActorDto);
 
@@ -52,7 +52,7 @@ public static class ActorsEndpoints
         return TypedResults.Created($"/actors/{id}", actorDto);
     }
 
-    private static async Task<Ok<List<ActorDto>>> GetAll(IActorRepository repository, IMapper mapper, int page = 1, int recordsPerPage = 10)
+    private static async Task<Ok<List<ActorDto>>> GetAll(IActorsRepository repository, IMapper mapper, int page = 1, int recordsPerPage = 10)
     {
         var pagination = new PaginationDto { Page = page, RecordsPerPage = recordsPerPage };
         var actors = await repository.GetAll(pagination);
@@ -61,7 +61,7 @@ public static class ActorsEndpoints
         return TypedResults.Ok(actorsDto);
     }
 
-    private static async Task<Results<Ok<ActorDto>, NotFound>> GetById(int id, IActorRepository repository, IMapper mapper)
+    private static async Task<Results<Ok<ActorDto>, NotFound>> GetById(int id, IActorsRepository repository, IMapper mapper)
     {
         var actor = await repository.GetById(id);
 
@@ -72,7 +72,7 @@ public static class ActorsEndpoints
         return TypedResults.Ok(actorDto);
     }
 
-    private static async Task<Ok<List<ActorDto>>> GetByName(string name, IActorRepository repository, IMapper mapper)
+    private static async Task<Ok<List<ActorDto>>> GetByName(string name, IActorsRepository repository, IMapper mapper)
     {
         var actors = await repository.GetByName(name);
         var actorsDto = mapper.Map<List<ActorDto>>(actors);
@@ -80,7 +80,7 @@ public static class ActorsEndpoints
         return TypedResults.Ok(actorsDto);
     }
 
-    private static async Task<Results<NoContent, NotFound>> Update(int id, [FromForm] UpdateActorDto updateActorDto, IActorRepository repository, IFileStorage fileStorage, IOutputCacheStore outputCacheStore, IMapper mapper)
+    private static async Task<Results<NoContent, NotFound>> Update(int id, [FromForm] UpdateActorDto updateActorDto, IActorsRepository repository, IFileStorage fileStorage, IOutputCacheStore outputCacheStore, IMapper mapper)
     {
         var actorDb = await repository.GetById(id);
 
@@ -102,7 +102,7 @@ public static class ActorsEndpoints
         return TypedResults.NoContent();
     }
 
-    private static async Task<Results<NoContent, NotFound>> Delete(int id, IActorRepository repository, IOutputCacheStore outputCacheStore, IFileStorage fileStorage)
+    private static async Task<Results<NoContent, NotFound>> Delete(int id, IActorsRepository repository, IOutputCacheStore outputCacheStore, IFileStorage fileStorage)
     {
         var actorDb = await repository.GetById(id);
 

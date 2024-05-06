@@ -18,6 +18,10 @@ public class AppDbContext : DbContext
 
     public DbSet<Comment> Comments { get; set; }
 
+    public DbSet<GenreMovie> GenreMovies { get; set; }
+
+    public DbSet<ActorMovie> ActorMovies { get; set; }
+
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -37,5 +41,9 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Movie>().Property(p => p.Title).HasMaxLength(255);
         modelBuilder.Entity<Movie>().Property(p => p.Poster).IsUnicode();
+
+        modelBuilder.Entity<GenreMovie>().HasKey(k => new { k.MovieId, k.GenreId });
+        
+        modelBuilder.Entity<ActorMovie>().HasKey(k => new { k.MovieId, k.ActorId });
     }
 }

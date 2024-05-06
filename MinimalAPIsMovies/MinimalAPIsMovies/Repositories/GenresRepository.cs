@@ -47,4 +47,9 @@ public class GenresRepository(AppDbContext context) : IGenresRepository
         await context.Genres.Where(w => w.Id == id)
                      .ExecuteDeleteAsync();
     }
+
+    public async Task<List<int>> Exists(IEnumerable<int> ids)
+    {
+        return await context.Genres.Where(w => ids.Contains(w.Id)).Select(s => s.Id).ToListAsync();
+    }
 }

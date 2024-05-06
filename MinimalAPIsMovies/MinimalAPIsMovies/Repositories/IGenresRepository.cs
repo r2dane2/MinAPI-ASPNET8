@@ -15,4 +15,5 @@ public interface IGenresRepository
     Task Update(Genre genre);
 
     Task Delete(int id);
+    Task<List<int>> Exists(IEnumerable<int> ids);
 }
