@@ -16,4 +16,5 @@ public interface IGenresRepository
 
     Task Delete(int id);
     Task<List<int>> Exists(IEnumerable<int> ids);
+    Task<bool> Exists(int id, string name);
 }

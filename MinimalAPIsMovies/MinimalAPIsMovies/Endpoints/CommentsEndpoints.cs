@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.OutputCaching;
 using MinimalAPIsMovies.DTOs;
 using MinimalAPIsMovies.Entities;
+using MinimalAPIsMovies.Filters;
 using MinimalAPIsMovies.Repositories;
 
 namespace MinimalAPIsMovies.Endpoints;
@@ -19,9 +20,9 @@ public static class CommentsEndpoints
 
         group.MapGet("/{id:int}", GetById);
 
-        group.MapPost("/", Create);
+        group.MapPost("/", Create).AddEndpointFilter<ValidationFilter<UpsertCommentDto>>();
 
-        group.MapPut("/{id:int}", Update);
+        group.MapPut("/{id:int}", Update).AddEndpointFilter<ValidationFilter<UpsertCommentDto>>();;
 
         group.MapDelete("/{id:int}", Delete);
 
@@ -64,7 +65,7 @@ public static class CommentsEndpoints
         return TypedResults.Ok(dto);
     }
 
-    private static async Task<Results<Created<CommentDto>, NotFound>> Create(int movieId, CreateCommentDto createDto,
+    private static async Task<Results<Created<CommentDto>, NotFound>> Create(int movieId, UpsertCommentDto upsertDto,
         ICommentsRepository repository,
         IMoviesRepository moviesRepository, IOutputCacheStore outputCacheStore, IMapper mapper)
     {
@@ -73,7 +74,7 @@ public static class CommentsEndpoints
             return TypedResults.NotFound();
         }
 
-        var model = mapper.Map<Comment>(createDto);
+        var model = mapper.Map<Comment>(upsertDto);
         model.MovieId = movieId;
         var id = await repository.Create(model);
         await outputCacheStore.EvictByTagAsync(Tag, default);
@@ -82,7 +83,7 @@ public static class CommentsEndpoints
         return TypedResults.Created($"/comments/{id}", dto);
     }
 
-    private static async Task<Results<NoContent, NotFound>> Update(int movieId, int id, UpdateCommentDto updateDto,
+    private static async Task<Results<NoContent, NotFound>> Update(int movieId, int id, UpsertCommentDto updateDto,
         ICommentsRepository repository, IMoviesRepository moviesRepository, IOutputCacheStore outputCacheStore,
         IMapper mapper)
     {

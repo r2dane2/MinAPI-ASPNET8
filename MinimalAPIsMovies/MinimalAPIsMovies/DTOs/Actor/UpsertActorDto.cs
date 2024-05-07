@@ -1,6 +1,6 @@
 ﻿namespace MinimalAPIsMovies.DTOs;
 
-public class UpdateActorDto
+public class UpsertActorDto
 {
     public string Name { get; set; } = null!;
 

@@ -34,6 +34,11 @@ public class GenresRepository(AppDbContext context) : IGenresRepository
         return await context.Genres.AnyAsync(a => a.Id == id);
     }
 
+    public async Task<bool> Exists(int id, string name)
+    {
+        return await context.Genres.AnyAsync(a => a.Id != id && a.Name == name);
+    }
+    
     /// <inheritdoc />
     public async Task Update(Genre genre)
     {

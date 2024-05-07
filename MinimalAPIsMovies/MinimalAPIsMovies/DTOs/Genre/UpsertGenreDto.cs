@@ -1,6 +1,6 @@
 ﻿namespace MinimalAPIsMovies.DTOs;
 
-public class CreateGenreDto
+public class UpsertGenreDto
 {
     public string Name { get; set; } = null!;
 }

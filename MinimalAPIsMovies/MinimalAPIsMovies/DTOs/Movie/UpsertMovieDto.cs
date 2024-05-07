@@ -1,12 +1,9 @@
 ﻿namespace MinimalAPIsMovies.DTOs;
 
-public class UpdateMovieDto
+public class UpsertMovieDto
 {
-    public string Name { get; set; } = null!;
-
-    public DateTime ReleaseDate { get; set; }
-
+    public string Title { get; set; } = null!;
     public bool InTheaters { get; set; }
-
+    public DateTime ReleaseDate { get; set; }
     public IFormFile? Poster { get; set; }
 }

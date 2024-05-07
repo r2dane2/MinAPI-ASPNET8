@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "5HpJ5wdkD4DbyCsFGlC0p45ECuUtLkRADJq1vt/fi0CndK7QNfG7fav45LlfS+9FG6ch+2s557UCd55V6Svwzw==",
+  "dgSpecHash": "NK9KqCUVULtTLNXbpwNsFSa4R8kwE4zSNBskgX/XohEwv447wiMfJK79OCNUFeBW2iVyht3qGOxtJpi2Y1gZ5Q==",
   "success": true,
   "projectFilePath": "D:\\Projects\\MinAPI-ASPNET8\\MinimalAPIsMovies\\MinimalAPIsMovies\\MinimalAPIsMovies.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,8 @@
     "C:\\Users\\Dane\\.nuget\\packages\\azure.core\\1.36.0\\azure.core.1.36.0.nupkg.sha512",
     "C:\\Users\\Dane\\.nuget\\packages\\azure.storage.blobs\\12.19.1\\azure.storage.blobs.12.19.1.nupkg.sha512",
     "C:\\Users\\Dane\\.nuget\\packages\\azure.storage.common\\12.18.1\\azure.storage.common.12.18.1.nupkg.sha512",
+    "C:\\Users\\Dane\\.nuget\\packages\\fluentvalidation\\11.9.1\\fluentvalidation.11.9.1.nupkg.sha512",
+    "C:\\Users\\Dane\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.9.1\\fluentvalidation.dependencyinjectionextensions.11.9.1.nupkg.sha512",
     "C:\\Users\\Dane\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Dane\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "C:\\Users\\Dane\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.3.3\\microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",

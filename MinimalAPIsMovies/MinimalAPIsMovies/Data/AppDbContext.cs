@@ -22,6 +22,8 @@ public class AppDbContext : DbContext
 
     public DbSet<ActorMovie> ActorMovies { get; set; }
 
+    public DbSet<Error> Errors { get; set; }
+
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.OutputCaching;
 using MinimalAPIsMovies.DTOs;
 using MinimalAPIsMovies.DTOs.ActorMovie;
 using MinimalAPIsMovies.Entities;
+using MinimalAPIsMovies.Filters;
 using MinimalAPIsMovies.Repositories;
 using MinimalAPIsMovies.Services;
 
@@ -17,10 +18,10 @@ public static class MoviesEndpoints
 
     public static RouteGroupBuilder MapMovies(this RouteGroupBuilder group)
     {
-        group.MapPost("/", Create).DisableAntiforgery();
+        group.MapPost("/", Create).AddEndpointFilter<ValidationFilter<UpsertMovieDto>>().DisableAntiforgery();
         group.MapGet("/", GetAll).CacheOutput(c => c.Expire(TimeSpan.FromSeconds(60)).Tag(Tag));
         group.MapGet("/{id:int}", GetById);
-        group.MapPut("/{id:int}", Update).DisableAntiforgery();
+        group.MapPut("/{id:int}", Update).AddEndpointFilter<ValidationFilter<UpsertMovieDto>>().DisableAntiforgery();
         group.MapDelete("/{id:int}", Delete);
         group.MapPost("/{id:int}/assignGenres", AssignGenres);
         group.MapPost("/{id:int}/assignActors", AssignActors);
@@ -50,7 +51,7 @@ public static class MoviesEndpoints
         return TypedResults.Ok(movieDto);
     }
 
-    private static async Task<Results<NoContent, NotFound>> Update(int id, [FromForm] UpdateMovieDto updateMovieDto,
+    private static async Task<Results<NoContent, NotFound>> Update(int id, [FromForm] UpsertMovieDto updateDto,
         IMoviesRepository repository, IFileStorage fileStorage, IOutputCacheStore outputCacheStore, IMapper mapper)
     {
         if (!await repository.Exists(id))
@@ -59,13 +60,13 @@ public static class MoviesEndpoints
         }
 
         var movie = await repository.GetById(id);
-        var movieForUpdate = mapper.Map<Movie>(updateMovieDto);
+        var movieForUpdate = mapper.Map<Movie>(updateDto);
         movieForUpdate.Id = id;
         movieForUpdate.Poster = movie?.Poster;
 
-        if (updateMovieDto.Poster is not null)
+        if (updateDto.Poster is not null)
         {
-            var url = await fileStorage.Store(Container, updateMovieDto.Poster);
+            var url = await fileStorage.Store(Container, updateDto.Poster);
             movieForUpdate.Poster = url;
         }
 
@@ -75,15 +76,15 @@ public static class MoviesEndpoints
         return TypedResults.NoContent();
     }
 
-    private static async Task<Created<MovieDto>> Create([FromForm] CreateMovieDto createMovieDto,
+    private static async Task<Created<MovieDto>> Create([FromForm] UpsertMovieDto createDto,
         IFileStorage fileStorage,
         IOutputCacheStore outputCacheStore, IMapper mapper, IMoviesRepository moviesRepository)
     {
-        var movie = mapper.Map<Movie>(createMovieDto);
+        var movie = mapper.Map<Movie>(createDto);
 
-        if (createMovieDto.Poster is not null)
+        if (createDto.Poster is not null)
         {
-            var url = await fileStorage.Store(Container, createMovieDto.Poster);
+            var url = await fileStorage.Store(Container, createDto.Poster);
             movie.Poster = url;
         }
 

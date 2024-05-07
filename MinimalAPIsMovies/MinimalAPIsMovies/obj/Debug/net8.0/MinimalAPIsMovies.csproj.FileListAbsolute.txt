@@ -137,3 +137,5 @@ D:\Projects\MinAPI-ASPNET8\MinimalAPIsMovies\MinimalAPIsMovies\bin\Debug\net8.0\
 D:\Projects\MinAPI-ASPNET8\MinimalAPIsMovies\MinimalAPIsMovies\bin\Debug\net8.0\Azure.Storage.Common.dll
 D:\Projects\MinAPI-ASPNET8\MinimalAPIsMovies\MinimalAPIsMovies\bin\Debug\net8.0\System.IO.Hashing.dll
 D:\Projects\MinAPI-ASPNET8\MinimalAPIsMovies\MinimalAPIsMovies\bin\Debug\net8.0\System.Memory.Data.dll
+D:\Projects\MinAPI-ASPNET8\MinimalAPIsMovies\MinimalAPIsMovies\bin\Debug\net8.0\FluentValidation.dll
+D:\Projects\MinAPI-ASPNET8\MinimalAPIsMovies\MinimalAPIsMovies\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll

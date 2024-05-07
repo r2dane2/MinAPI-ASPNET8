@@ -1,6 +1,9 @@
+using FluentValidation;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using MinimalAPIsMovies.Data;
 using MinimalAPIsMovies.Endpoints;
+using MinimalAPIsMovies.Entities;
 using MinimalAPIsMovies.Repositories;
 using MinimalAPIsMovies.Services;
 
@@ -43,6 +46,7 @@ builder.Services.AddScoped<IGenresRepository, GenresRepository>();
 builder.Services.AddScoped<IActorsRepository, ActorsRepository>();
 builder.Services.AddScoped<IMoviesRepository, MoviesRepository>();
 builder.Services.AddScoped<ICommentsRepository, CommentsRepository>();
+builder.Services.AddScoped<IErrorsRepository, ErrorsRepository>();
 
 // Select the file storage
 builder.Services.AddTransient<IFileStorage, LocalFileStorage>();
@@ -50,7 +54,13 @@ builder.Services.AddTransient<IFileStorage, LocalFileStorage>();
 
 builder.Services.AddHttpContextAccessor();
 
+// Add automapper configurations from project
 builder.Services.AddAutoMapper(typeof(Program));
+
+// Get all the validation rules from the whole project
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
+builder.Services.AddProblemDetails();
 
 #endregion
 
@@ -63,6 +73,24 @@ if (builder.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler(exceptionHandlerApp => exceptionHandlerApp.Run(async context =>
+{
+    var exceptionHandlerFeature = context.Features.Get<IExceptionHandlerFeature>();
+    var exception = exceptionHandlerFeature?.Error!;
+    var error = new Error
+    {
+        ErrorMessage = exception.Message,
+        StackTrace = exception.StackTrace
+    };
+
+    var repository = context.RequestServices.GetRequiredService<IErrorsRepository>();
+    await repository.Create(error);
+    
+    await Results.BadRequest(new {type="error", message ="an unexpected exception has occured", status = 500 }).ExecuteAsync(context);
+}));
+
+app.UseStatusCodePages();
 
 app.UseStaticFiles();
 
