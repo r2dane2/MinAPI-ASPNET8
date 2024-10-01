@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MinimalAPIsMovies.Entities;
 
 namespace MinimalAPIsMovies.Data;
 
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext
 {
     /// <inheritdoc />
     public AppDbContext(DbContextOptions options) : base(options)
@@ -47,5 +49,13 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<GenreMovie>().HasKey(k => new { k.MovieId, k.GenreId });
         
         modelBuilder.Entity<ActorMovie>().HasKey(k => new { k.MovieId, k.ActorId });
+
+        modelBuilder.Entity<IdentityUser>().ToTable("Users");
+        modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+        modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RolesClaims");
+        modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("UsersClaims");
+        modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("UsersLogins");
+        modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UsersRoles");
+        modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UsersTokens");
     }
 }

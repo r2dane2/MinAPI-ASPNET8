@@ -1,5 +1,6 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MinimalAPIsMovies.Data;
 using MinimalAPIsMovies.Endpoints;
@@ -19,6 +20,11 @@ else
 {
     builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql());
 }
+
+builder.Services.AddIdentityCore<IdentityUser>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
+builder.Services.AddScoped<UserManager<IdentityUser>>();
+builder.Services.AddScoped<SignInManager<IdentityUser>>();
 
 builder.Services.AddCors(options =>
 {
@@ -62,6 +68,9 @@ builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 builder.Services.AddProblemDetails();
 
+builder.Services.AddAuthentication().AddJwtBearer();
+builder.Services.AddAuthorization();
+
 #endregion
 
 var app = builder.Build();
@@ -97,6 +106,9 @@ app.UseStaticFiles();
 app.UseCors();
 
 app.UseOutputCache();
+
+app.UseAuthorization();
+
 
 app.MapGroup("/genres")
     .MapGenres();

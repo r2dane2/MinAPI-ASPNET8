@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.OutputCaching;
 using MinimalAPIsMovies.DTOs;
@@ -12,13 +10,13 @@ namespace MinimalAPIsMovies.Endpoints;
 
 public static class GenresEndpoints
 {
-    private const string Tag = "genres-get";
+    private const string CacheTag = "genres-get";
 
     public static RouteGroupBuilder MapGenres(this RouteGroupBuilder group)
     {
         group.MapGet("/", GetAll)
             .CacheOutput(c => c.Expire(TimeSpan.FromSeconds(60))
-                .Tag(Tag));
+                .Tag(CacheTag)).RequireAuthorization();
 
         group.MapGet("/{id:int}", GetById);
 
@@ -61,7 +59,7 @@ public static class GenresEndpoints
     {
         var genre = mapper.Map<Genre>(upsertGenreDto);
         var id = await repository.Create(genre);
-        await outputCacheStore.EvictByTagAsync(Tag, default);
+        await outputCacheStore.EvictByTagAsync(CacheTag, default);
         var dto = mapper.Map<GenreDto>(genre);
 
         return TypedResults.Created($"/genres/{id}", dto);
@@ -81,7 +79,7 @@ public static class GenresEndpoints
         genre.Id = id;
 
         await repository.Update(genre);
-        await outputCacheStore.EvictByTagAsync(Tag, default);
+        await outputCacheStore.EvictByTagAsync(CacheTag, default);
 
         return TypedResults.NoContent();
     }
@@ -97,7 +95,7 @@ public static class GenresEndpoints
         }
 
         await repository.Delete(id);
-        await outputCacheStore.EvictByTagAsync(Tag, default);
+        await outputCacheStore.EvictByTagAsync(CacheTag, default);
 
         return TypedResults.NoContent();
     }
